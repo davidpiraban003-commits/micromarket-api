@@ -7,8 +7,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// Esta clase intercepta TODOS los errores de la app
+// y los convierte en respuestas JSON bonitas
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    // Simple local exception types in case external classes are missing
+    public static class ResourceNotFoundException extends RuntimeException {
+        public ResourceNotFoundException(String message) { super(message); }
+    }
+
+    public static class BusinessException extends RuntimeException {
+        public BusinessException(String message) { super(message); }
+    }
     // Cuando no encuentras un recurso → 404
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(ResourceNotFoundException ex) {
