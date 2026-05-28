@@ -1,10 +1,9 @@
 package com.micromarket.api.Entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import java.util.List;
+import lombok.*;
 import java.math.BigDecimal;
-import com.micromarket.api.Entity.Proveedor;
+import com.micromarket.api.Entity.Categoria;
 
 
 @Data
@@ -37,11 +36,6 @@ public class Producto {
         @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", nullable = false) // 
     private Categoria categoria;
-
-
-    @ManyToMany(mappedBy = "productos")
-    private List<Proveedor> provedores;
-
 
 
 }
