@@ -1,0 +1,48 @@
+package com.micromarket.api.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
+
+
+// Esta clase intercepta TODOS los errores de la app
+// y los convierte en respuestas JSON bonitas
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    // Simple local exception types in case external classes are missing
+    public static class ResourceNotFoundException extends RuntimeException {
+        public ResourceNotFoundException(String message) { super(message); }
+    }
+
+    public static class BusinessException extends RuntimeException {
+        public BusinessException(String message) { super(message); }
+    }
+    // Cuando no encuentras un recurso → 404
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNotFound(ResourceNotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    // Cuando se viola una regla de negocio → 400
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Map<String, String>> handleBusiness(BusinessException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    // Cuando fallan las validaciones @Valid → 400 con detalles
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> errores = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(err ->
+            errores.put(err.getField(), err.getDefaultMessage())
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errores);
+    }
+}
