@@ -1,7 +1,7 @@
 package com.micromarket.api.dto;
 
 
-import com.micromarket.api.enums.EnumCargo;
+import com.micromarket.api.Entity.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.math.BigDecimal;

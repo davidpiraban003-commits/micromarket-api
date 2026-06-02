@@ -39,7 +39,7 @@ public class Empleado {
     private List<Venta> ventas;
 }
 
-// Allowed cargos for empleados
+
 enum EnumCargo {
     ADMINISTRADOR,
     CAJERO,

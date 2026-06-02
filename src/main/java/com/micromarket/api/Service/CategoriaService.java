@@ -1,5 +1,6 @@
 package com.micromarket.api.Service;
-
+import com.micromarket.api.dto.CategoriaRequestDTO;
+import com.micromarket.api.dto.CategoriaResponseDTO;
 import java.util.List;
 
 public interface CategoriaService {

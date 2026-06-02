@@ -28,14 +28,14 @@ public class Producto {
     @Column(nullable = false)
     private Boolean activo = true;
 
-    // Relación con Categoria (ManyToOne)
+    // Relación )
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", nullable = false)
     @ToString.Exclude 
     private Categoria categoria;
 
-    // Relación con Proveedor (ManyToMany)
+    // Relación 
     @ManyToMany(mappedBy = "productos")
     @ToString.Exclude  
-    private List<Proveedor> proveedores;
+      private List<Proveedor> proveedores;
 }
